@@ -31,23 +31,29 @@ def handle_message(message):
 def receiver():
     if ("<strong>BOT</strong>:" in request.json['lines'][0]):
         return "Message ignored."
-    for line in request.json['lines']:
-        msg = {
-            "stream": request.json['stream'],
-            "subject": request.json['subject'],
-            "sender": request.json['sender'],
-            "content": line
-        }
+    lines = request.json['lines']
+    for paragraph in request.json['lines']:
+        print paragraph
+        for line in paragraph.split("<br>"):
+            msg = {
+                "stream": request.json['stream'],
+                "subject": request.json['subject'],
+                "sender": request.json['sender'],
+                "content": line.strip()
+            }
 
-        result = handle_message(msg)
+            result = handle_message(msg)
 
-        if result:
-            hb_client.send_message({
-                "type": "stream",
-                "to": msg['stream'],
-                "subject": msg['subject'],
-                "content": "**BOT**: @**%s** %s" % (msg['sender'], result)
-            }) 
+            if result:
+                hb_client.send_message({
+                    "type": "stream",
+                    "to": msg['stream'],
+                    "subject": msg['subject'],
+                    "content": "**BOT**: @**%s** %s" % (msg['sender'], result)
+                }) 
+
+                # don't allow multi-line command spamming
+                return "Command interpreted."
 
     return "Message received."
 
