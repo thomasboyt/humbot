@@ -19,9 +19,13 @@ def handle_message(message):
     text = message['content']
     if (text.startswith(config.PREFIX)):
         text = text[1:]
-        (cmd, rest) = text.split(" ", 1)
+        try:
+            (cmd, rest) = text.split(" ", 1)
+        except ValueError:
+            cmd = text
+            rest = None
         if cmd in plugins.commands:
-            plugins.commands[cmd](hb_client, message, rest)
+            return plugins.commands[cmd](hb_client, message, rest)
 
 @app.route("/receiver", methods=["POST"])
 def receiver():
@@ -35,7 +39,15 @@ def receiver():
             "content": line
         }
 
-        handle_message(msg)
+        result = handle_message(msg)
+
+        if result:
+            hb_client.send_message({
+                "type": "stream",
+                "to": msg['stream'],
+                "subject": msg['subject'],
+                "content": "**BOT**: @**%s** %s" % (msg['sender'], result)
+            }) 
 
     return "Message received."
 

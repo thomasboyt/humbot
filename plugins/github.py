@@ -12,9 +12,4 @@ def search_repo(client, message, rest):
     except KeyError:
         result = "No repos found :("
 
-    client.send_message({
-        "type": "stream",
-        "to": message['stream'],
-        "subject": message['subject'],
-        "content": "**BOT**: @**%s** %s" % (message['sender'], result)
-    }) 
+    return result
