@@ -6,4 +6,4 @@ Created by [Thomas Boyt](https://github.com/thomasboyt).
 
 * lolcats.py
 * google.py
-
+* weather.py
