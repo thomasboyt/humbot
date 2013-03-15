@@ -4,24 +4,11 @@ An IRC bot, but for [Humbug](http://humbughq.com). Made at [Hacker School](http:
 
 ## Installing and Use
 
-Right now, Humbug doesn't have a read API, which makes this a little more complicated than an IRC bot would be. Right now, Humbot itself doesn't read the chat, but relies on an external scraper such as [Humbug Spy](https://github.com/thomasboyt/humbug-spy). 
-
-If you'd like to develop your own scraper (that doesn't, say, require your browser to be open 24/7!), you can do so by scraping however you like and then POSTing a JSON string to Humbot's `/receiver/` endpoint in this format:
-
-```json
-{
-  "sender": "sender's username",
-  "stream": "current stream",
-  "subject": "current subject",
-  "message": "current message"
-}
-```
-
-Anyways, once you have whatever scraper you'd like set up, installing the dependencies is easy enough:
+Installing the dependencies is easy enough:
 
 ```
 pip install -r requirements.txt
-pip install -e git://github.com/humbughq/python-humbug.git#egg=humbug
+pip install https://humbughq.com/dist/api/python-humbug_0.1.4~hackerschool.tar.gz
 ```
 
 Write a `config.py` file based on `config.sample.py` and launch the server with `python server.py`. Assuming your scraper is sending valid messages, it should start working immediately!

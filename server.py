@@ -1,4 +1,3 @@
-from flask import Flask, request
 import humbug
 import requests
 import json
@@ -7,8 +6,6 @@ import config
 from plugins.plugin import Plugin
 from controller import PluginsController
 plugins = PluginsController()
-
-app = Flask(__name__)
 
 hb_client = humbug.Client(
     api_key = config.API_KEY,
@@ -27,18 +24,16 @@ def handle_message(message):
         if cmd in plugins.commands:
             return plugins.commands[cmd](hb_client, message, rest)
 
-@app.route("/receiver", methods=["POST"])
-def receiver():
-    if ("<strong>BOT</strong>:" in request.json['lines'][0]):
-        return "Message ignored."
-    lines = request.json['lines']
-    for paragraph in request.json['lines']:
+def receiver(message):
+    if message['content'].startswith('**BOT**:'):
+        return "Message ignored"
+    for paragraph in message['content'].split('\n\n'):
         print paragraph
-        for line in paragraph.split("<br>"):
+        for line in paragraph.split('\n'):
             msg = {
-                "stream": request.json['stream'],
-                "subject": request.json['subject'],
-                "sender": request.json['sender'],
+                "stream": message['display_recipient'],
+                "subject": message['subject'],
+                "sender": message['sender_email'],
                 "content": line.strip()
             }
 
@@ -58,5 +53,4 @@ def receiver():
     return "Message received."
 
 if __name__ == "__main__":
-    app.debug = config.DEBUG
-    app.run()
+    hb_client.call_on_each_message(receiver)

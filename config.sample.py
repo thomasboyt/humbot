@@ -11,5 +11,5 @@ DEBUG_STREAM = ""
 # Pick a prefix for your bot's commands
 PREFIX = "!"
 
-# Detailed Flask error logs
+# Detailed error logs
 DEBUG = True
