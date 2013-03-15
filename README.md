@@ -11,7 +11,7 @@ pip install -r requirements.txt
 pip install https://humbughq.com/dist/api/python-humbug_0.1.4~hackerschool.tar.gz
 ```
 
-Write a `config.py` file based on `config.sample.py` and launch the server with `python server.py`. Assuming your scraper is sending valid messages, it should start working immediately!
+Write a `config.py` file based on `config.sample.py` and launch the server with `python bot.py`. The bot should start listening and responding as soon as it's launched. 
 
 ## Plugin Development
 

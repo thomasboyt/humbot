@@ -1,4 +1,7 @@
-Created by [Thomas Boyt](https://github.com/thomasboyt).
+## Core Authors
+
+* [Thomas Boyt](https://github.com/thomasboyt)
+* [Waseem Daher](https://github.com/wdaher)
 
 ## Plugin Authors
 
