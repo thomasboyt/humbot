@@ -27,7 +27,7 @@ def handle_message(message):
 def receiver(message):
     if message['content'].startswith('**BOT**:'):
         return "Message ignored"
-    for line in message['content'].split('\n\n'):
+    for line in message['content'].split('\n'):
         msg = {
             "stream": message['display_recipient'],
             "subject": message['subject'],
