@@ -27,28 +27,26 @@ def handle_message(message):
 def receiver(message):
     if message['content'].startswith('**BOT**:'):
         return "Message ignored"
-    for paragraph in message['content'].split('\n\n'):
-        print paragraph
-        for line in paragraph.split('\n'):
-            msg = {
-                "stream": message['display_recipient'],
-                "subject": message['subject'],
-                "sender": message['sender_email'],
-                "content": line.strip()
-            }
+    for line in message['content'].split('\n\n'):
+        msg = {
+            "stream": message['display_recipient'],
+            "subject": message['subject'],
+            "sender": message['sender_email'],
+            "content": line.strip()
+        }
 
-            result = handle_message(msg)
+        result = handle_message(msg)
 
-            if result:
-                hb_client.send_message({
-                    "type": "stream",
-                    "to": msg['stream'],
-                    "subject": msg['subject'],
-                    "content": "**BOT**: @**%s** %s" % (msg['sender'], result)
-                }) 
+        if result:
+            hb_client.send_message({
+                "type": "stream",
+                "to": msg['stream'],
+                "subject": msg['subject'],
+                "content": "**BOT**: @**%s** %s" % (msg['sender'], result)
+            }) 
 
-                # don't allow multi-line command spamming
-                return "Command interpreted."
+            # don't allow multi-line command spamming
+            return "Command interpreted."
 
     return "Message received."
 
