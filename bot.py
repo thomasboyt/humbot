@@ -31,7 +31,7 @@ def receiver(message):
         msg = {
             "stream": message['display_recipient'],
             "subject": message['subject'],
-            "sender": message['sender_email'],
+            "sender": message['sender_full_name'],
             "content": line.strip()
         }
 
